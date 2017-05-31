@@ -10,6 +10,9 @@
 #ifndef DISTANCESENSOR_H
 #define DISTANCESENSOR_H
 
+#define TIME_PERIOD         60000   // 20 ms time period
+#define INPUT_PULSE         30      // 10 us input pulse
+
 void distance_init();
 
 void start_meas_distance();

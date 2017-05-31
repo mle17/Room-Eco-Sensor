@@ -22,3 +22,7 @@ void main(void) {
         }
     }
 }
+
+void TA2_N_IRQHandler(void) {
+
+}

@@ -8,18 +8,17 @@
  *         Quarter: Spring 2017
  */
 #include "msp.h"
+#include "distanceSensor.h"
 
 void main(void) {
     unsigned int distance;
 
     WDTCTL = WDTPW | WDTHOLD;           // Stop watchdog timer
-	
-    start_meas_dist();
 
     while (1) {
         if (check_distance_flag()) {
             distance = get_distance();
-            start_meas_dist();
+            start_meas_distance();
         }
     }
 }

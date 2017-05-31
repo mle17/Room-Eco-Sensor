@@ -10,6 +10,8 @@
 #ifndef DISTANCESENSOR_H
 #define DISTANCESENSOR_H
 
+void distance_init();
+
 void start_meas_distance();
 unsigned int get_distance();
 

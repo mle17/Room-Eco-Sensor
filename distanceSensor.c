@@ -16,6 +16,10 @@
 
 static int distance_flag = 0;
 
+/*
+ *  Initialize bits for pin used to send pulse to trigger
+ *  HC-SR04 ultrasonic sensor
+ */
 void distance_init() {
     /* Configure P5.6 as Timer A2.1 output */
     P5->SEL0 |= BIT6;
@@ -23,6 +27,10 @@ void distance_init() {
     P5->DIR |= BIT6;
 }
 
+/*
+ *  Sending pulse to HC-SR04 ultrasonic sensor to start
+ *  measuring distance
+ */
 void start_meas_distance() {
     /* configure Timer A2.1 as PWM */
     TIMER_A2->CCR[0] = TIME_PERIOD;             /* time period */
@@ -32,6 +40,10 @@ void start_meas_distance() {
     TIMER_A2->CTL |= TIMER_A_CTL_SSEL__SMCLK    /* SMCLK */
             | TIMER_A_CTL_MC__UP                /* up mode */
             | TIMER_A_CTL_CLR;                  /* clear TA0R register */
+}
+
+void save_distance(unsigned int distance) {
+
 }
 
 unsigned int get_distance() {

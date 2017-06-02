@@ -16,6 +16,7 @@
 void distance_init();
 
 void start_meas_distance();
+void save_distance(unsigned int distance);
 unsigned int get_distance();
 
 void set_distance_flag();

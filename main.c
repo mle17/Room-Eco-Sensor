@@ -23,6 +23,10 @@ void main(void) {
     }
 }
 
+/*
+ *  After pulse to trigger HC-SR04 elapsed,
+ *  turn off pulse.
+ */
 void TA2_N_IRQHandler(void) {
 
 }

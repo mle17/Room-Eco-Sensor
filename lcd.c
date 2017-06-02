@@ -41,7 +41,7 @@ void WriteLine(char *line) {
 }
 
 void LCD_init(void) {
-    P4->DIR |= P4_LCD_PORTS;             /* make P4 pins output for data and controls */
+    P4->DIR |= P4_LCD_PORTS;    /* make P4 pins output for data and controls */
     delay_ms(30, FREQ_3_MHz);   /* initialization sequence */
     LCD_nibble_write(0x30, 0);
     delay_ms(10, FREQ_3_MHz);

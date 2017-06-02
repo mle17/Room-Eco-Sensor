@@ -14,9 +14,9 @@
 void main(void) {
     unsigned int distance;
 
-    WDTCTL = WDTPW | WDTHOLD;           /* Stop watchdog timer */
+    WDTCTL = WDTPW | WDTHOLD;           // Stop watchdog timer
 
-    distance_init();        /* Use P5.6 to send pulse */
+    distance_init();        // Use P5.6 to send pulse
 
     /* Enable global interrupt */
     __enable_irq();
@@ -39,7 +39,27 @@ void main(void) {
  *  turn off pulse, then turn off interrupt.
  */
 void TA2_N_IRQHandler(void) {
-    TIMER_A2->CCTL[1] &= ~(TIMER_A_CCTLN_CCIE + /* clear interrupt flag */
-            TIMER_A_CCTLN_OUTMOD_MASK);         /* mask output */
-    TIMER_A2->CCTL[1] |= TIMER_A_CCTLN_OUTMOD_0;/* output to outmod value */
+    TIMER_A2->CCTL[1] &= ~(TIMER_A_CCTLN_CCIE + // clear interrupt flag
+            TIMER_A_CCTLN_OUTMOD_MASK);         // mask output
+    TIMER_A2->CCTL[1] |= TIMER_A_CCTLN_OUTMOD_0;// output to outmod value
+}
+
+/*
+ *  Detect time elapsed when HC-SR04 ultrasonic sensor
+ *  echos back distance.
+ */
+void TA0_N_IRQHandler(void) {
+    if (TIMER_A0->CCTL[2] & TIMER_A_CCTLN_CM_1) {   // rising edge
+        save_init_distance_time(TIMER_A0->CCR[2]);  // save initial time
+        TIMER_A0->CCTL[2] &= ~TIMER_A_CCTLN_CM_MASK;// mask capture mode
+        TIMER_A0->CCTL[2] |= TIMER_A_CCTLN_CM_2;    // capture falling edge
+    }
+    else {                                          // falling edge
+        save_final_distance_time(TIMER_A0->CCR[2]); // save final time
+        set_distance_flag();                        // indicate measurement is complete
+        TIMER_A0->CCTL[2] &= ~TIMER_A_CCTLN_CCIE;  // disable capture interrupt
+    }
+
+    // Clear the interrupt flag
+    TIMER_A0->CCTL[0] &= ~(TIMER_A_CCTLN_CCIFG);
 }

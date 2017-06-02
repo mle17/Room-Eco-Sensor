@@ -26,7 +26,13 @@ void distance_init() {
     P5->SEL1 &= ~BIT6;
     P5->DIR |= BIT6;
 
-    TIMER_A2->CCTL[1] &= ~TIMER_A_CCTLN_OUT;    /* set OUT value = 0 */
+    TIMER_A2->CCTL[1] &= ~TIMER_A_CCTLN_OUT;    // set OUT value = 0
+
+    /* Configure P2.5 as Timer A0.2 input capture */
+    TIMER_A0->CCTL[2] |=
+            TIMER_A_CCTLN_CCIS_0 |              // Use CCI2A
+            TIMER_A_CCTLN_CAP |                 // Enable capture mode
+            TIMER_A_CCTLN_SCS;                  // Synchronous capture
 }
 
 /*
@@ -35,17 +41,26 @@ void distance_init() {
  */
 void start_meas_distance() {
     /* configure Timer A2.1 as PWM */
-    TIMER_A2->CCR[0] = TIME_PERIOD;                 /* time period */
-    TIMER_A2->CCR[1] = INPUT_PULSE;                 /* input pulse duration */
-    TIMER_A2->CCTL[1] &= ~TIMER_A_CCTLN_OUTMOD_MASK;/* mask output */
-    TIMER_A2->CCTL[1] |= TIMER_A_CCTLN_CCIE |       /* set interrupt flag */
-            TIMER_A_CCTLN_OUTMOD_7;                 /* output reset/set mode */
-    TIMER_A2->CTL |= TIMER_A_CTL_SSEL__SMCLK        /* SMCLK */
-            | TIMER_A_CTL_MC__UP                    /* up mode */
-            | TIMER_A_CTL_CLR;                      /* clear TA0R register */
+    TIMER_A2->CCR[0] = TIME_PERIOD;                 // time period
+    TIMER_A2->CCR[1] = INPUT_PULSE;                 // input pulse duration
+    TIMER_A2->CCTL[1] &= ~TIMER_A_CCTLN_OUTMOD_MASK;// mask output
+    TIMER_A2->CCTL[1] |= TIMER_A_CCTLN_CCIE |       // set interrupt flag
+            TIMER_A_CCTLN_OUTMOD_7;                 // output reset/set mode
+    TIMER_A2->CTL |= TIMER_A_CTL_SSEL__SMCLK        // SMCLK
+            | TIMER_A_CTL_MC__UP                    // up mode
+            | TIMER_A_CTL_CLR;                      // clear TA0R register
+
+    /* use Timer A0.2 as input capture */
+    TIMER_A0->CCTL[2] &= ~TIMER_A_CCTLN_CM_MASK;    // mask mode of capture
+    TIMER_A0->CCTL[2] |= TIMER_A_CCTLN_CM_1 |       // capture rising edge
+            TIMER_A_CCTLN_CCIE;                     // enable capture interrupt
 }
 
-void save_distance(unsigned int distance) {
+void save_init_distance_time(unsigned short init_time) {
+
+}
+
+void save_final_distance_time(unsigned short final_time) {
 
 }
 

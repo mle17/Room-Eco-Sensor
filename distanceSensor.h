@@ -16,7 +16,8 @@
 void distance_init();
 
 void start_meas_distance();
-void save_distance(unsigned int distance);
+void save_init_distance_time(unsigned short init_time);
+void save_final_distance_time(unsigned short final_time);
 unsigned int get_distance();
 
 void set_distance_flag();

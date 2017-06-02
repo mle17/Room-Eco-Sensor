@@ -16,6 +16,10 @@
 
 static int distance_flag = 0;
 
+static unsigned short init_time = 0;
+static unsigned short final_time = 0;
+static unsigned short diff_time = 0;
+
 /*
  *  Initialize bits for pin used to send pulse to trigger
  *  HC-SR04 ultrasonic sensor
@@ -56,16 +60,17 @@ void start_meas_distance() {
             TIMER_A_CCTLN_CCIE;                     // enable capture interrupt
 }
 
-void save_init_distance_time(unsigned short init_time) {
-
+void save_init_distance_time(unsigned short time) {
+    init_time = time;
 }
 
-void save_final_distance_time(unsigned short final_time) {
-
+void save_final_distance_time(unsigned short time) {
+    final_time = time;
+    diff_time = final_time - init_time;
 }
 
 unsigned int get_distance() {
-
+    return diff_time;
 }
 
 void set_distance_flag() {

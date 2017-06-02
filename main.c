@@ -57,7 +57,7 @@ void TA0_N_IRQHandler(void) {
     else {                                          // falling edge
         save_final_distance_time(TIMER_A0->CCR[2]); // save final time
         set_distance_flag();                        // indicate measurement is complete
-        TIMER_A0->CCTL[2] &= ~TIMER_A_CCTLN_CCIE;  // disable capture interrupt
+        TIMER_A0->CCTL[2] &= ~TIMER_A_CCTLN_CCIE;   // disable capture interrupt
     }
 
     // Clear the interrupt flag

@@ -11,9 +11,12 @@ GEN_CMDS__FLAG :=
 
 ORDERED_OBJS += \
 "./distanceSensor.obj" \
+"./freqDelay.obj" \
+"./lcd.obj" \
 "./main.obj" \
 "./startup_msp432p401r_ccs.obj" \
 "./system_msp432p401r.obj" \
+"./ui.obj" \
 "../msp432p401r.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
@@ -156,8 +159,8 @@ Project45.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "distanceSensor.obj" "main.obj" "startup_msp432p401r_ccs.obj" "system_msp432p401r.obj" 
-	-$(RM) "distanceSensor.d" "main.d" "startup_msp432p401r_ccs.d" "system_msp432p401r.d" 
+	-$(RM) "distanceSensor.obj" "freqDelay.obj" "lcd.obj" "main.obj" "startup_msp432p401r_ccs.obj" "system_msp432p401r.obj" "ui.obj" 
+	-$(RM) "distanceSensor.d" "freqDelay.d" "lcd.d" "main.d" "startup_msp432p401r_ccs.d" "system_msp432p401r.d" "ui.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

@@ -11,8 +11,12 @@
 #ifndef UI_H
 #define UI_H
 
+#define LEN_DISTANCE        7
+#define DISTANCE_CURSOR     0x8A
+#define DETECTION_CURSOR    0xCA
+
 void init_UI();
-void update_UI_distance();
+void update_UI_distance(float distance);
 void set_UI_sensor_status();
 void clear_UI_sensor_status();
 

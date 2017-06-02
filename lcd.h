@@ -18,6 +18,9 @@
 #define RW              0x02    /* P4.1 mask */
 #define EN              0x04    /* P4.2 mask */
 
+#define FIRST_LINE      0x80
+#define SECOND_LINE     0xC0
+
 void Clear_LCD();
 void Home_LCD();
 

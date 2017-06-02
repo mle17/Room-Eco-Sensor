@@ -10,38 +10,56 @@ CMD_SRCS += \
 
 C_SRCS += \
 ../distanceSensor.c \
+../freqDelay.c \
+../lcd.c \
 ../main.c \
 ../startup_msp432p401r_ccs.c \
-../system_msp432p401r.c 
+../system_msp432p401r.c \
+../ui.c 
 
 C_DEPS += \
 ./distanceSensor.d \
+./freqDelay.d \
+./lcd.d \
 ./main.d \
 ./startup_msp432p401r_ccs.d \
-./system_msp432p401r.d 
+./system_msp432p401r.d \
+./ui.d 
 
 OBJS += \
 ./distanceSensor.obj \
+./freqDelay.obj \
+./lcd.obj \
 ./main.obj \
 ./startup_msp432p401r_ccs.obj \
-./system_msp432p401r.obj 
+./system_msp432p401r.obj \
+./ui.obj 
 
 OBJS__QUOTED += \
 "distanceSensor.obj" \
+"freqDelay.obj" \
+"lcd.obj" \
 "main.obj" \
 "startup_msp432p401r_ccs.obj" \
-"system_msp432p401r.obj" 
+"system_msp432p401r.obj" \
+"ui.obj" 
 
 C_DEPS__QUOTED += \
 "distanceSensor.d" \
+"freqDelay.d" \
+"lcd.d" \
 "main.d" \
 "startup_msp432p401r_ccs.d" \
-"system_msp432p401r.d" 
+"system_msp432p401r.d" \
+"ui.d" 
 
 C_SRCS__QUOTED += \
 "../distanceSensor.c" \
+"../freqDelay.c" \
+"../lcd.c" \
 "../main.c" \
 "../startup_msp432p401r_ccs.c" \
-"../system_msp432p401r.c" 
+"../system_msp432p401r.c" \
+"../ui.c" 
 
 

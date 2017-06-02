@@ -12,3 +12,4 @@
  */
 
 #include "ui.h"
+#include "lcd.h"

@@ -9,6 +9,9 @@
  */
 #include "msp.h"
 #include "distanceSensor.h"
+#include "freqDelay.h"
+#include "ui.h"
+#include "lcd.h"
 #include <stdio.h>
 
 void main(void) {
@@ -17,6 +20,7 @@ void main(void) {
     WDTCTL = WDTPW | WDTHOLD;           // Stop watchdog timer
 
     distance_init();        // Use P5.6 to send pulse
+    init_UI();              // Use P4.0-2 P4.4-7 for LCD
 
     /* Enable global interrupt */
     __enable_irq();
@@ -24,6 +28,7 @@ void main(void) {
     /* Enable Timer A2 Interrupts */
     NVIC_EnableIRQ(TA2_N_IRQn);
 
+    delay_ms(20, FREQ_3_MHz);
     start_meas_distance();
 
     while (1) {
@@ -39,6 +44,7 @@ void main(void) {
  *  turn off pulse, then turn off interrupt.
  */
 void TA2_N_IRQHandler(void) {
+    printf("Pulse ended\n");
     TIMER_A2->CCTL[1] &= ~(TIMER_A_CCTLN_CCIE + // clear interrupt flag
             TIMER_A_CCTLN_OUTMOD_MASK);         // mask output
     TIMER_A2->CCTL[1] |= TIMER_A_CCTLN_OUTMOD_0;// output to outmod value

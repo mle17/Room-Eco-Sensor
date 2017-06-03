@@ -13,6 +13,9 @@ ui.obj: C:/ti/ccsv7/ccs_base/arm/include/msp432p401r_classic.h
 ui.obj: C:/ti/ccsv7/ccs_base/arm/include/CMSIS/core_cm4.h
 ui.obj: C:/ti/ccsv7/ccs_base/arm/include/CMSIS/cmsis_compiler.h
 ui.obj: C:/ti/ccsv7/ccs_base/arm/include/system_msp432p401r.h
+ui.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include/stdio.h
+ui.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include/linkage.h
+ui.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include/stdarg.h
 
 ../ui.c: 
 ../freqDelay.h: 
@@ -27,3 +30,6 @@ C:/ti/ccsv7/ccs_base/arm/include/msp432p401r_classic.h:
 C:/ti/ccsv7/ccs_base/arm/include/CMSIS/core_cm4.h: 
 C:/ti/ccsv7/ccs_base/arm/include/CMSIS/cmsis_compiler.h: 
 C:/ti/ccsv7/ccs_base/arm/include/system_msp432p401r.h: 
+C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include/stdio.h: 
+C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include/linkage.h: 
+C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include/stdarg.h: 

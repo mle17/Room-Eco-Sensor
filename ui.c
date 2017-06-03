@@ -14,11 +14,19 @@
 #include "freqDelay.h"
 #include "ui.h"
 #include "lcd.h"
+#include <stdio.h>
 
 void init_UI() {
     LCD_init();
     delay_ms(20, FREQ_3_MHz);
 
+    Clear_LCD();
+    delay_ms(20, FREQ_3_MHz);
+
+    Home_LCD();
+    delay_ms(20, FREQ_3_MHz);
+
+    printf("Distance: ");
     WriteLine("Distance: ");
     delay_ms(10, FREQ_3_MHz);
 

@@ -13,7 +13,7 @@
 
 #define LEN_DISTANCE        7
 #define DISTANCE_CURSOR     0x8A
-#define DETECTION_CURSOR    0xCA
+#define OCCUPANTS_CURSOR    0xCB
 
 void init_UI();
 void update_UI_distance(float distance);

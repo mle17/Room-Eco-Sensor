@@ -33,7 +33,7 @@ void init_UI() {
     SetCursorLocation(SECOND_LINE);
     delay_ms(10, FREQ_3_MHz);
 
-    WriteLine("Detected: ");
+    WriteLine("Occupants: ");
     delay_ms(10, FREQ_3_MHz);
 }
 
@@ -49,14 +49,14 @@ void update_UI_distance(float distance) {
 }
 
 void set_UI_sensor_status() {
-    SetCursorLocation(DETECTION_CURSOR);
+    SetCursorLocation(OCCUPANTS_CURSOR);
     delay_ms(10, FREQ_3_MHz);
 
     WriteLine("Yes");
 }
 
 void clear_UI_sensor_status() {
-    SetCursorLocation(DETECTION_CURSOR);
+    SetCursorLocation(OCCUPANTS_CURSOR);
     delay_ms(10, FREQ_3_MHz);
 
     WriteLine("No ");

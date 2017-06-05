@@ -32,8 +32,16 @@ void distance_init() {
     TIMER_A2->CCTL[1] &= ~TIMER_A_CCTLN_OUT;    // set OUT value = 0
 
     /* Configure P2.5 as Timer A0.2 input capture */
-    TIMER_A0->CCTL[2] |=
-            TIMER_A_CCTLN_CCIS_0 |              // Use CCI2A
+    P2->SEL0 |= BIT5;                       // TA0.CCI2A input capture pin
+    P2->SEL1 &= ~BIT5;
+    P2->DIR &= ~BIT5;
+
+    TIMER_A0->CTL |= TIMER_A_CTL_TASSEL_2 |     // Use SMCLK as clock source,
+            TIMER_A_CTL_MC_2 |                  // Start timer in continuous mode
+            TIMER_A_CTL_ID__1 |                 // Divide timer by 1
+            TIMER_A_CTL_CLR;                    // clear TA0R
+
+    TIMER_A0->CCTL[2] |= TIMER_A_CCTLN_CCIS_0 | // Use CCI2A
             TIMER_A_CCTLN_CAP |                 // Enable capture mode
             TIMER_A_CCTLN_SCS;                  // Synchronous capture
 }
@@ -53,9 +61,9 @@ void start_meas_distance() {
             | TIMER_A_CTL_MC__UP                    // up mode
             | TIMER_A_CTL_CLR;                      // clear TA0R register
 
-    /* use Timer A0.2 as input capture */
+    /* use Timer A0.2 (P2.5) as input capture */
     TIMER_A0->CCTL[2] &= ~TIMER_A_CCTLN_CM_MASK;    // mask mode of capture
-    TIMER_A0->CCTL[2] |= TIMER_A_CCTLN_CM_1 |       // capture rising edge
+    TIMER_A0->CCTL[2] |= TIMER_A_CCTLN_CM_3 |       // capture edges
             TIMER_A_CCTLN_CCIE;                     // enable capture interrupt
 }
 

@@ -13,12 +13,19 @@
 #define TIME_PERIOD         60000   // 20 ms time period
 #define INPUT_PULSE         30      // 10 us input pulse
 
+#define RISING_EDGE         0
+#define FALLING_EDGE        1
+
 void distance_init();
 
 void start_meas_distance();
 void save_init_distance_time(unsigned short time);
 void save_final_distance_time(unsigned short time);
 unsigned int get_distance();
+
+void detect_distance_rising_flag();
+void detect_distance_falling_flag();
+int check_distance_rising_flag();
 
 void set_distance_flag();
 void clear_distance_flag();

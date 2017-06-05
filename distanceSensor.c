@@ -15,6 +15,7 @@
 #include "msp.h"
 
 static int distance_flag = 0;
+static int edge_flag = RISING_EDGE;
 
 static unsigned short init_time = 0;
 static unsigned short diff_time = 0;
@@ -77,6 +78,18 @@ void save_final_distance_time(unsigned short time) {
 
 unsigned int get_distance() {
     return diff_time;
+}
+
+void detect_distance_rising_flag() {
+
+}
+
+void detect_distance_falling_flag() {
+
+}
+
+int check_distance_rising_flag() {
+
 }
 
 void set_distance_flag() {

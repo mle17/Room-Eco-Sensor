@@ -14,28 +14,34 @@
 #include "lcd.h"
 #include <stdio.h>
 
+static int i = 0;
+static unsigned short init, final, diff;
+
 void main(void) {
     unsigned int distance = 0;
 
     WDTCTL = WDTPW | WDTHOLD;           // Stop watchdog timer
 
-    distance_init();        // Use P5.6 to send pulse
-    init_UI();              // Use P4.0-2 P4.4-7 for LCD
+    distance_init();    // Use P5.6 TA2.1 to send pulse
+                        // Use P2.5 TA0.2 to measure pulse length
+    init_UI();          // Use P4.0-2 P4.4-7 for LCD
+
+    set_DCO(FREQ_48_MHz);
 
     /* Enable global interrupt */
     __enable_irq();
 
     /* Enable Timer A2 Interrupts */
-    NVIC_EnableIRQ(TA2_N_IRQn);
+    //NVIC_EnableIRQ(TA2_N_IRQn);
     NVIC_EnableIRQ(TA0_N_IRQn);
 
-    delay_ms(20, FREQ_3_MHz);
+    delay_ms(20, FREQ_48_MHz);
     start_meas_distance();
 
     while (1) {
         if (check_distance_flag()) {
             distance = get_distance();
-            printf("Distance: %u\n", distance); // to delete
+            printf("Distance: %d\n", distance); // to delete
             start_meas_distance();
         }
     }
@@ -46,7 +52,7 @@ void main(void) {
  *  turn off pulse, then turn off interrupt.
  */
 void TA2_N_IRQHandler(void) {
-    printf("Sending pulse\n"); // to delete
+    delay_ms(3, FREQ_48_MHz);
     TIMER_A2->CCTL[1] &= ~(TIMER_A_CCTLN_CCIE + // clear interrupt flag
             TIMER_A_CCTLN_OUTMOD_MASK);         // mask output
     TIMER_A2->CCTL[1] |= TIMER_A_CCTLN_OUTMOD_0;// output to outmod value
@@ -57,19 +63,33 @@ void TA2_N_IRQHandler(void) {
  *  echos back distance.
  */
 void TA0_N_IRQHandler(void) {
-    printf("Entering interrupt\n"); // to delete
-    if (TIMER_A0->CCTL[2] & TIMER_A_CCTLN_CM_1) {   // rising edge
-        printf("Rising edge\n"); // to delete
-        save_init_distance_time(TIMER_A0->CCR[2]);  // save initial time
-        TIMER_A0->CCTL[2] &= ~TIMER_A_CCTLN_CM_MASK;// mask capture mode
-        TIMER_A0->CCTL[2] |= TIMER_A_CCTLN_CM_2;    // capture falling edge
+    //printf("Entering interrupt\n"); // to delete
+    if (i % 2) {
+        init = TIMER_A0->CCR[2];
     }
-    else {                                          // falling edge
-        printf("Falling edge\n"); // to delete
-        save_final_distance_time(TIMER_A0->CCR[2]); // save final time
-        set_distance_flag();                        // indicate measurement is complete
-        TIMER_A0->CCTL[2] &= ~TIMER_A_CCTLN_CCIE;   // disable capture interrupt
+    else {
+        final = TIMER_A0->CCR[2];
+        diff = final - init;
+        printf("Diff: %hu\n", diff);
     }
+    i++;
+//    if (check_distance_rising_flag()) {   // rising edge
+//        //printf("Rising edge\n"); // to delete
+//        save_init_distance_time(TIMER_A0->CCR[2]);  // save initial time
+//        detect_distance_falling_flag();
+//
+//        //TIMER_A0->CCTL[2] &= ~TIMER_A_CCTLN_CM_MASK;// mask capture mode
+//        //TIMER_A0->CCTL[2] |= TIMER_A_CCTLN_CM_2;    // capture falling edge
+//    }
+//    else {                                          // falling edge
+//        //printf("Falling edge\n"); // to delete
+//        save_final_distance_time(TIMER_A0->CCR[2]); // save final time
+//        set_distance_flag();                        // indicate measurement is complete
+//        detect_distance_rising_flag();
+//
+//
+//        //TIMER_A0->CCTL[2] &= ~TIMER_A_CCTLN_CCIE;   // disable capture interrupt
+//    }
 
     // Clear the interrupt flag
     TIMER_A0->CCTL[2] &= ~(TIMER_A_CCTLN_CCIFG);

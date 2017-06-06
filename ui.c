@@ -26,7 +26,6 @@ void init_UI() {
     Home_LCD();
     delay_ms(20, FREQ_3_MHz);
 
-    printf("Distance: ");
     WriteLine("Distance: ");
     delay_ms(10, FREQ_3_MHz);
 

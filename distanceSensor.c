@@ -12,7 +12,9 @@
  */
 
 #include "distanceSensor.h"
+#include "freqDelay.h"
 #include "msp.h"
+#include <stdio.h>
 
 static int distance_flag = 0;
 static int edge_flag = RISING_EDGE;
@@ -47,10 +49,10 @@ void distance_init() {
 
     TIMER_A0->CTL |= TIMER_A_CTL_TASSEL_2 |     // use SMCLK as clock source,
             TIMER_A_CTL_MC_2 |                  // start timer in continuous mode
-            TIMER_A_CTL_ID__8 |                 // divide timer by 1
+            TIMER_A_CTL_ID__8 |                 // divide timer by 8
             TIMER_A_CTL_CLR;                    // clear TA0R
 
-    TIMER_A0->EX0 |= TIMER_A_EX0_IDEX__8;       // Divide timer by 2
+    TIMER_A0->EX0 |= TIMER_A_EX0_IDEX__3;       // Divide timer by 4
 
     TIMER_A0->CCTL[2] &= ~TIMER_A_CCTLN_CM_MASK;// mask mode of capture
     TIMER_A0->CCTL[2] |= TIMER_A_CCTLN_CCIS_0 | // use CCI2A
@@ -74,7 +76,7 @@ void start_meas_distance() {
     TIMER_A2->CCTL[1] &= ~TIMER_A_CCTLN_OUTMOD_MASK;// mask output
     TIMER_A2->CCTL[1] |= TIMER_A_CCTLN_CCIE |       // set interrupt flag
             TIMER_A_CCTLN_OUTMOD_7;                 // output reset/set mode
-    TIMER_A2->CTL |= TIMER_A_CTL_CLR;               // clear TA0R register
+    TIMER_A2->CTL |= TIMER_A_CTL_CLR;               // clear TA2R register
 }
 
 void save_init_distance_time(unsigned short time) {
@@ -85,8 +87,14 @@ void save_final_distance_time(unsigned short time) {
     diff_time = time - init_time;
 }
 
-unsigned int get_distance() {
-    return diff_time;
+float get_distance() {
+    float distance;
+
+    printf("Diff: %hu\n", diff_time);   // to delete
+    //delay_ms(74, FREQ_48_MHz);
+    distance = (float) diff_time / CCR_PER_METER;
+
+    return distance;
 }
 
 void detect_distance_rising_flag() {
@@ -98,9 +106,11 @@ void detect_distance_falling_flag() {
 }
 
 int check_distance_rising_flag() {
-    if (edge_flag == RISING_EDGE)
-        return 1;
-    return 0;
+    return (edge_flag == RISING_EDGE);
+}
+
+void save_pulse_time(unsigned short pulse_duration) {
+    diff_time = pulse_duration;
 }
 
 void set_distance_flag() {

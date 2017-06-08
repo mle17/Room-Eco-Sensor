@@ -9,6 +9,7 @@ CMD_SRCS += \
 ../msp432p401r.cmd 
 
 C_SRCS += \
+../UARTChar.c \
 ../distanceSensor.c \
 ../freqDelay.c \
 ../lcd.c \
@@ -18,6 +19,7 @@ C_SRCS += \
 ../ui.c 
 
 C_DEPS += \
+./UARTChar.d \
 ./distanceSensor.d \
 ./freqDelay.d \
 ./lcd.d \
@@ -27,6 +29,7 @@ C_DEPS += \
 ./ui.d 
 
 OBJS += \
+./UARTChar.obj \
 ./distanceSensor.obj \
 ./freqDelay.obj \
 ./lcd.obj \
@@ -36,6 +39,7 @@ OBJS += \
 ./ui.obj 
 
 OBJS__QUOTED += \
+"UARTChar.obj" \
 "distanceSensor.obj" \
 "freqDelay.obj" \
 "lcd.obj" \
@@ -45,6 +49,7 @@ OBJS__QUOTED += \
 "ui.obj" 
 
 C_DEPS__QUOTED += \
+"UARTChar.d" \
 "distanceSensor.d" \
 "freqDelay.d" \
 "lcd.d" \
@@ -54,6 +59,7 @@ C_DEPS__QUOTED += \
 "ui.d" 
 
 C_SRCS__QUOTED += \
+"../UARTChar.c" \
 "../distanceSensor.c" \
 "../freqDelay.c" \
 "../lcd.c" \

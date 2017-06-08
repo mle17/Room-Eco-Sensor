@@ -16,16 +16,20 @@
 #define RISING_EDGE         0
 #define FALLING_EDGE        1
 
+#define CCR_PER_METER       11750.0
+
 void distance_init();
 
 void start_meas_distance();
 void save_init_distance_time(unsigned short time);
 void save_final_distance_time(unsigned short time);
-unsigned int get_distance();
+float get_distance();
 
 void detect_distance_rising_flag();
 void detect_distance_falling_flag();
 int check_distance_rising_flag();
+
+void save_pulse_time(unsigned short pulse_duration);
 
 void set_distance_flag();
 void clear_distance_flag();

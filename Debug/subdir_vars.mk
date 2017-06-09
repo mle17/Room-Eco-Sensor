@@ -11,6 +11,7 @@ CMD_SRCS += \
 C_SRCS += \
 ../UARTChar.c \
 ../distanceSensor.c \
+../ecoRoom.c \
 ../freqDelay.c \
 ../lcd.c \
 ../main.c \
@@ -21,6 +22,7 @@ C_SRCS += \
 C_DEPS += \
 ./UARTChar.d \
 ./distanceSensor.d \
+./ecoRoom.d \
 ./freqDelay.d \
 ./lcd.d \
 ./main.d \
@@ -31,6 +33,7 @@ C_DEPS += \
 OBJS += \
 ./UARTChar.obj \
 ./distanceSensor.obj \
+./ecoRoom.obj \
 ./freqDelay.obj \
 ./lcd.obj \
 ./main.obj \
@@ -41,6 +44,7 @@ OBJS += \
 OBJS__QUOTED += \
 "UARTChar.obj" \
 "distanceSensor.obj" \
+"ecoRoom.obj" \
 "freqDelay.obj" \
 "lcd.obj" \
 "main.obj" \
@@ -51,6 +55,7 @@ OBJS__QUOTED += \
 C_DEPS__QUOTED += \
 "UARTChar.d" \
 "distanceSensor.d" \
+"ecoRoom.d" \
 "freqDelay.d" \
 "lcd.d" \
 "main.d" \
@@ -61,6 +66,7 @@ C_DEPS__QUOTED += \
 C_SRCS__QUOTED += \
 "../UARTChar.c" \
 "../distanceSensor.c" \
+"../ecoRoom.c" \
 "../freqDelay.c" \
 "../lcd.c" \
 "../main.c" \

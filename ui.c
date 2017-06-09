@@ -16,6 +16,8 @@
 #include "lcd.h"
 #include <stdio.h>
 
+static int numOccupants = 0;
+
 void init_UI() {
     LCD_init();
     delay_ms(20, FREQ_3_MHz);
@@ -32,7 +34,7 @@ void init_UI() {
     SetCursorLocation(SECOND_LINE);
     delay_ms(10, FREQ_3_MHz);
 
-    WriteLine("Occupants: ");
+    WriteLine("Occupants:  0");
     delay_ms(10, FREQ_3_MHz);
 }
 
@@ -47,16 +49,28 @@ void update_UI_distance(float distance) {
     WriteLine(distance_str);
 }
 
-void set_UI_sensor_status() {
+void inc_occupants_LCD() {
+    char numOcc[10];
+
     SetCursorLocation(OCCUPANTS_CURSOR);
     delay_ms(10, FREQ_3_MHz);
 
-    WriteLine("Yes");
+    if (numOccupants < MAX_OCCUPANTS)
+        numOccupants++;
+
+    sprintf(numOcc, "%2d", numOccupants);
+    WriteLine(numOcc);
 }
 
-void clear_UI_sensor_status() {
+void dec_occupants_LCD() {
+    char numOcc[10];
+
     SetCursorLocation(OCCUPANTS_CURSOR);
     delay_ms(10, FREQ_3_MHz);
 
-    WriteLine("No ");
+    if (numOccupants > MIN_OCCUPANTS)
+        numOccupants--;
+
+    sprintf(numOcc, "%2d", numOccupants);
+    WriteLine(numOcc);
 }

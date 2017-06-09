@@ -49,19 +49,11 @@ void main(void) {
     while (1) {
         if (check_distance_flag()) {
             distance = get_distance();
-            P5->OUT |= BIT1;
             //delay_ms(74, FREQ_48_MHz);
             printf("Distance: %1.2f\n", distance);    // to delete
-            P5->OUT &= ~BIT1;
-            //delay_ms(3, FREQ_48_MHz);
             update_UI_distance(distance);
             start_meas_distance();
             clear_distance_flag();
-            //TIMER_A2->CCTL[1] &= ~TIMER_A_CCTLN_OUTMOD_MASK;// mask output
-            //TIMER_A2->CCTL[1] |= TIMER_A_CCTLN_CCIE |       // set interrupt flag
-            //        TIMER_A_CCTLN_OUTMOD_7;                 // output reset/set mode
-            //TIMER_A2->CTL |= TIMER_A_CTL_CLR;               // clear TA2R register
-            //printf("Main IE flag: %d\n", TIMER_A2->CCTL[1] & TIMER_A_CCTLN_CCIE); // to delete
         }
     }
 }

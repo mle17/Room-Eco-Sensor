@@ -15,9 +15,12 @@
 #define DISTANCE_CURSOR     0x8A
 #define OCCUPANTS_CURSOR    0xCB
 
+#define MAX_OCCUPANTS       99
+#define MIN_OCCUPANTS       0
+
 void init_UI();
 void update_UI_distance(float distance);
-void set_UI_sensor_status();
-void clear_UI_sensor_status();
+void inc_occupants_LCD();
+void dec_occupants_LCD();
 
 #endif /* UI_H_ */

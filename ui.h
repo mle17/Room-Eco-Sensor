@@ -23,4 +23,6 @@ void update_UI_distance(float distance);
 void inc_occupants_LCD();
 void dec_occupants_LCD();
 
+int get_num_occupants();
+
 #endif /* UI_H_ */

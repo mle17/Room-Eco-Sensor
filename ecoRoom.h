@@ -21,4 +21,6 @@ void set_outside_flag();
 void clear_outside_flag();
 int check_outside_flag();
 
+void init_outside_detection();
+
 #endif /* ECOROOM_H_ */

@@ -13,6 +13,7 @@
 #include "ui.h"
 #include "UARTChar.h"
 #include "lcd.h"
+#include "ecoRoom.h"
 #include <stdio.h>
 
 static int i = 0;
@@ -20,13 +21,14 @@ static unsigned short init, final, diff;
 
 void main(void) {
     float distance = 0;
-    char msg[50];
+    int num_occupants;
 
     WDTCTL = WDTPW | WDTHOLD;           // Stop watchdog timer
 
-    distance_init();    // Use P5.6 TA2.1 to send pulse
-                        // Use P2.5 TA0.2 to measure pulse length
-    init_UI();          // Use P4.0-2 P4.4-7 for LCD
+    distance_init();            // Use P5.6 TA2.1 to send pulse
+                                // Use P2.5 TA0.2 to measure pulse length
+    init_UI();                  // Use P4.0-2 P4.4-7 for LCD
+    init_outside_detection();   // Use P1.6 to check if other sensor trigger
 
     set_DCO(FREQ_48_MHz);
     UART2_init();       // Use P3.2 RX, P3.3 TX for UART
@@ -41,7 +43,8 @@ void main(void) {
     /* Enable Timer A2 Interrupts */
     //NVIC_EnableIRQ(TA2_N_IRQn);
     NVIC_EnableIRQ(TA0_N_IRQn);
-    NVIC_EnableIRQ(EUSCIA2_IRQn);
+    NVIC_EnableIRQ(PORT1_IRQn);
+    //NVIC_EnableIRQ(EUSCIA2_IRQn);
 
     delay_ms(20, FREQ_48_MHz);
     start_meas_distance();
@@ -49,9 +52,33 @@ void main(void) {
     while (1) {
         if (check_distance_flag()) {
             distance = get_distance();
+
             //delay_ms(74, FREQ_48_MHz);
             printf("Distance: %1.2f\n", distance);    // to delete
             update_UI_distance(distance);
+
+            /* checking if someone entered door */
+            if (distance < DOOR_DISTANCE && distance > MIN_DISTANCE) {
+                /* check if someone enter or exit room */
+                if (check_outside_flag()) { // enter room
+                    clear_outside_flag();
+                    inc_occupants_LCD();
+                }
+                else {                      // exit room
+                    dec_occupants_LCD();
+                }
+
+                /* adjust LED based on number of occupants */
+                num_occupants = get_num_occupants();
+                if (num_occupants > 0) {
+                    P3->OUT |= BIT0;
+                }
+                else {
+                    P3->OUT &= ~BIT0;
+                }
+                delay_ms(2000, FREQ_48_MHz);
+            }
+
             start_meas_distance();
             clear_distance_flag();
         }
@@ -97,4 +124,9 @@ void EUSCIA2_IRQHandler(void) {
 
     rec = EUSCI_A2->RXBUF;
     printf("%c", rec);
+}
+
+void PORT1_IRQHandler(void) {
+    set_outside_flag();
+    P1->IFG &= ~BIT6;       // clear interrupt flag
 }

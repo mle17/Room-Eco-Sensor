@@ -15,6 +15,7 @@ main.obj: ../freqDelay.h
 main.obj: ../ui.h
 main.obj: ../UARTChar.h
 main.obj: ../lcd.h
+main.obj: ../ecoRoom.h
 main.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include/stdio.h
 main.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include/linkage.h
 main.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include/stdarg.h
@@ -34,6 +35,7 @@ C:/ti/ccsv7/ccs_base/arm/include/system_msp432p401r.h:
 ../ui.h: 
 ../UARTChar.h: 
 ../lcd.h: 
+../ecoRoom.h: 
 C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include/stdio.h: 
 C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include/linkage.h: 
 C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include/stdarg.h: 

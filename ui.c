@@ -74,3 +74,7 @@ void dec_occupants_LCD() {
     sprintf(numOcc, "%2d", numOccupants);
     WriteLine(numOcc);
 }
+
+int get_num_occupants() {
+    return numOccupants;
+}
